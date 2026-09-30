@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block titulo %}Proyecto{% endblock %}
+{% block contenido %}
+<h2>{% if proyecto %}Editar{% else %}Nuevo{% endif %} proyecto</h2>
+<div class="tarjeta-formulario">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="boton">Guardar</button>
+    </form>
+</div>
+{% endblock %}

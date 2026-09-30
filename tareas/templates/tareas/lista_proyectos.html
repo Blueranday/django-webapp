@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block titulo %}Mis proyectos{% endblock %}
+{% block contenido %}
+<h1>Mis proyectos</h1>
+<a href="{% url 'crear_proyecto' %}" class="boton">+ Nuevo proyecto</a>
+
+{% if proyectos %}
+<ul class="grid-proyectos">
+    {% for proyecto in proyectos %}
+        <li class="tarjeta-proyecto">
+            <h3><a href="{% url 'detalle_proyecto' proyecto.pk %}">{{ proyecto.nombre }}</a></h3>
+            <p class="contador">{{ proyecto.tareas.count }} tarea{{ proyecto.tareas.count|pluralize }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="estado-vacio">Todavía no tienes proyectos. Crea el primero para empezar a organizar tus tareas.</p>
+{% endif %}
+{% endblock %}

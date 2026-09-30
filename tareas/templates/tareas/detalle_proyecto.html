@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block titulo %}{{ proyecto.nombre }}{% endblock %}
+{% block contenido %}
+<a href="{% url 'lista_proyectos' %}" class="enlace-discreto">← Mis proyectos</a>
+<h1>{{ proyecto.nombre }}</h1>
+<p>{{ proyecto.descripcion }}</p>
+<a href="{% url 'editar_proyecto' proyecto.pk %}" class="boton-secundario boton">Editar</a>
+<a href="{% url 'eliminar_proyecto' proyecto.pk %}" class="enlace-discreto">Eliminar proyecto</a>
+
+<h2 style="margin-top: 2.2rem;">Tareas</h2>
+<a href="{% url 'crear_tarea' proyecto.pk %}" class="boton">+ Nueva tarea</a>
+
+{% if proyecto.tareas.all %}
+<ul class="lista-tareas">
+    {% for tarea in proyecto.tareas.all %}
+        <li class="item-tarea {{ tarea.estado }}">
+            <div>
+                <div class="titulo-tarea">{{ tarea.titulo }}</div>
+                <div class="meta-tarea">
+                    <span class="chip {{ tarea.estado }}">{{ tarea.get_estado_display }}</span>
+                    {% if tarea.fecha_limite %} · vence {{ tarea.fecha_limite }}{% endif %}
+                </div>
+            </div>
+            <div class="acciones-tarea">
+                <a href="{% url 'editar_tarea' tarea.pk %}">Editar</a>
+                <a href="{% url 'eliminar_tarea' tarea.pk %}">Eliminar</a>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p class="estado-vacio">Sin tareas todavía.</p>
+{% endif %}
+{% endblock %}
